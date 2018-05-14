@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERecruitmentSystem", "ERecruitmentSystem\ERecruitmentSystem.csproj", "{4CA0B0AE-B721-40BC-B812-2AC65D2E9F0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CA0B0AE-B721-40BC-B812-2AC65D2E9F0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA0B0AE-B721-40BC-B812-2AC65D2E9F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA0B0AE-B721-40BC-B812-2AC65D2E9F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA0B0AE-B721-40BC-B812-2AC65D2E9F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3AF9E038-61FF-4F07-899E-0A13274D0D92}
+	EndGlobalSection
+EndGlobal
