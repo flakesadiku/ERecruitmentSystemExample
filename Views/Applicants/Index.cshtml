@@ -1,0 +1,107 @@
+﻿@model IEnumerable<ERecruitmentSystem.Models.Applicant>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonalNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaidenName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Birthdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaritalStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PassportNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DrivingLicence)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserLocation)
+        </th>
+        <th></th>
+    </tr>
+</table>
+<script>
+    //Konsumimi i api GET metodes 
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/api/ApplicantsApi",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                alert("Data recieved from Api.");
+                $.each(data, function (i, item) {
+                    var rows = "<tr>" +
+                        "<td id='PersonalNumber' >" + item.PersonalNumber + "</td>" +
+                        "<td id='FirstName' >" + item.FirstName + "</td>" +
+                        "<td id='LastName' >" + item.LastName + "</td>" +
+                        "<td id='MaidenName' >" + item.MaidenName + "</td>" +
+                        "<td id='Email' >" + item.Email + "</td>" +
+                        "<td id='Password' >" + item.Password + "</td>" +
+                        "<td id='PhoneNumber' >" + item.PhoneNumber + "</td>" +
+                        "<td id='Birthdate' >" + item.Birthdate + "</td>" +
+                        "<td id='Gender' >" + item.Gender + "</td>" +
+                        "<td id='MaritalStatus' >" + item.MaritalStatus + "</td>" +
+                        "<td id='PassportNumber' >" + item.PassportNumber + "</td>" +
+                        "<td id='DrivingLicense' >" + item.DrivingLicense + "</td>" +
+                        "<td id='UserLocation' >" + item.UserLocation + "</td>" +
+                        "<td><a href='/Applicants/Edit/" + item.PersonalNumber + "' class='btn' btn-default>Edit </a>" +
+                        "<a onclick='confirmDelete(" + item.PersonalNumber+")' class='btn' btn-default>Delete </a></td > "
+                        "</tr>";
+                    $(".table").append(rows);
+
+                });
+            }
+        });
+    });
+    //Funksioni  per fshirjen e nje aplikuesi nga db
+    function confirmDelete(PersonalNumber) {
+        if (confirm("Delete this record?")) {
+            $.ajax({
+                type: "POST",
+                url: "/api/ApplicantsApi",
+                data: {
+                    action: "delete", applicant: { PersonalNumber: PersonalNumber } },
+                dataTye: "json",
+                success: function () {
+                    window.location.href = "/Applicants/Index";
+                }
+            });
+        }
+        return false;
+    }
+</script>
+

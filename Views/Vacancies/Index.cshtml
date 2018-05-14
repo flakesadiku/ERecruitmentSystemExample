@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ERecruitmentSystem.Models.Vacancy>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Vacancy_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+</table>
+<script>
+    //Konsumimi i api GET metodes
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/api/VacanciesApi",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                alert("Data recieved from Api.");
+                $.each(data, function (i, item) {
+                    var rows = "<tr>" +
+                        "<td id='Vacancy_Code' >" + item.Vacancy_Code + "</td>" +
+                        "<td id='Description' >" + item.Description + "</td>" +
+                        "<td id='StartDateTime' >" + item.StartDateTime+ "</td>" +
+                        "<td id='EndDateTime' >" + item.EndDateTime + "</td>" +
+                        "<td id='IsActive' >" + item.IsActive + "</td>" +
+                        "<td><a href='/Vacancies/Edit/" + item.Vacancy_Code + "' class='btn' btn-default>Edit </a>" +
+                        "<a onclick='confirmDelete(" + item.Vacancy_Code + ")' class='btn' btn-default>Delete </a></td > "
+                        "</tr>";
+                    $(".table").append(rows);
+
+                });
+            }
+        });
+    });
+    //Funksioni  per fshirjen e nje pozite nga db
+    function confirmDelete(Vacancy_Code) {
+        if (confirm("Delete this record?")) {
+            $.ajax({
+                type: "POST",
+                url: "/api/VacanciesApi",
+                data: {
+                    action: "delete", vacancy: { Vacancy_Code: Vacancy_Code }
+                },
+                dataTye: "json",
+                success: function () {
+                    window.location.href = "/Vacancies/Index";
+                }
+            });
+        }
+        return false;
+    }
+</script>
+
+

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ERecruitmentSystem.Models.Application>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Applicant.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Exam.Exam_Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vacancy.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Applicant_IP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Is_Confirmed)
+        </th>
+        <th></th>
+    </tr>
+
+</table>
+<script>
+    //Konsumimi i api GET metodes
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/api/ApplicationsApi",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                alert("Data recieved from Api.");
+                $.each(data, function (i, item) {
+                    var rows = "<tr>" +
+                        "<td id='FirstName' >" + item.Applicant.FirstName + "</td>" +
+                        "<td id='Exam_Description' >" + item.Exam.Exam_Description + "</td>" +
+                        "<td id='Description' >" + item.Vacancy.Description + "</td>" +
+                        "<td id='DateTime' >" + item.DateTime + "</td>" +
+                        "<td id='Applicant_IP' >" + item.Applicant_IP + "</td>" +
+                        "<td id='Is_Confirmed' >" + item.Is_Confirmed + "</td>" +
+                        "<td><a href='/Applications/Edit/" + item.App_ID + "' class='btn' btn-default>Edit </a>" +
+                        "<a onclick='confirmDelete(" + item.App_ID + ")' class='btn' btn-default>Delete </a></td > "
+                    "</tr>";
+                    $(".table").append(rows);
+                });
+            }
+        });
+    });
+    //Funksioni  per fshirjen e nje aplikuesi nga db
+    function confirmDelete(App_ID) {
+        if (confirm("Delete this record?")) {
+            $.ajax({
+                type: "POST",
+                url: "/api/ApplicationsApi",
+                data: {
+                    action: "delete", application: { App_ID: App_ID } },
+                dataTye: "json",
+                success: function () {
+                    window.location.href = "/Applications/Index";
+                }
+            });
+        }
+        return false;
+    }
+</script>
